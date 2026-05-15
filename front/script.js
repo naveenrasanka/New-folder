@@ -67,6 +67,26 @@ const initializeState = () => {
 
 const state = initializeState();
 
+// Shipping cost variable
+let globalShippingCost = 100; // Default value
+
+// Fetch shipping cost from backend
+const fetchShippingCost = async () => {
+  try {
+    const response = await fetch("../backend/settings/shipping.php", {
+      method: "GET"
+    });
+    const data = await response.json();
+    if (data.success) {
+      globalShippingCost = parseFloat(data.shipping_cost) || 100;
+      return globalShippingCost;
+    }
+  } catch (error) {
+    console.error("Error fetching shipping cost:", error);
+  }
+  return globalShippingCost;
+};
+
 // Save cart to localStorage
 const saveCart = () => {
   const cartObj = Object.fromEntries(state.cart);
@@ -627,7 +647,7 @@ const renderCart = () => {
     .filter(html => html !== "") // Remove empty items
     .join("");
 
-  const shipping = subtotal > 200 ? 0 : 12;
+  const shipping = globalShippingCost;
   cartSubtotal.textContent = currency.format(subtotal);
   cartShipping.textContent = currency.format(shipping);
   cartTotal.textContent = currency.format(subtotal + shipping);
@@ -1359,7 +1379,7 @@ function setupPaymentSystem() {
       }
     });
     
-    const shipping = subtotal >= 200 ? 0 : 9.99;
+    const shipping = globalShippingCost;
     const total = subtotal + shipping;
     
     // Update amounts
@@ -1452,7 +1472,7 @@ function setupPaymentSystem() {
           (sum, item) => sum + Number(item.price) * Number(item.quantity),
           0
         );
-        const shipping = subtotal >= 200 ? 0 : 9.99;
+        const shipping = globalShippingCost;
         const selectedPaymentMethod = paymentForm.querySelector('input[name="paymentMethod"]:checked')?.value || "credit_card";
         const isCashOnDelivery = selectedPaymentMethod === "cash_on_delivery";
         const paymentStatus = isCashOnDelivery ? "pending" : "paid";
@@ -1626,6 +1646,7 @@ const animateCounters = () => {
 
 setTheme(state.theme);
 loadProducts(); // Load products from database (includes renderCart)
+fetchShippingCost(); // Load shipping cost from backend
 loadAdvertisementsForHero();
 updateCounts();
 updateCountdown();

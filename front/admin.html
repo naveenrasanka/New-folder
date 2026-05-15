@@ -776,6 +776,7 @@
         <div class="tabs">
           <button class="tab active" data-tab="products">Products</button>
           <button class="tab" data-tab="orders">Orders</button>
+          <button class="tab" data-tab="shipping">Shipping</button>
           <button class="tab" data-tab="ads">Advertisements</button>
           <button class="tab" data-tab="messages">Contact Messages</button>
         </div>
@@ -807,6 +808,7 @@
                 <option value="rice">Rice</option>
                 <option value="bakery">Bakery Products</option>
                 <option value="beverages">Beverages</option>
+                <option value="others">Others</option>
               </select>
             </div>
 
@@ -905,6 +907,45 @@
           </div>
         </div>
         <!-- End Orders Tab -->
+
+        <!-- Shipping Tab -->
+        <div class="tab-content" id="shipping-tab">
+          <div id="shippingErrorMsg" class="error-message"></div>
+          <div id="shippingSuccessMsg" class="success-message"></div>
+
+          <div style="max-width: 500px;">
+            <div class="admin-header">
+              <h3>Shipping Cost Management</h3>
+              <p>Set the default shipping cost for orders</p>
+            </div>
+
+            <form class="admin-form" id="shippingForm">
+              <div class="form-group">
+                <label for="shippingCost">Shipping Cost (Rs) *</label>
+                <input
+                  type="number"
+                  id="shippingCost"
+                  name="shippingCost"
+                  placeholder="e.g., 100"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+              <button type="submit" class="primary-btn">Update Shipping Cost</button>
+            </form>
+
+            <div style="margin-top: 24px; padding: 16px; background: var(--bg); border-radius: 12px;">
+              <p style="margin-top: 0; color: var(--muted); font-size: 0.9rem;">
+                <strong>Current Shipping Cost:</strong>
+              </p>
+              <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 8px 0 0 0;">
+                Rs <span id="currentShippingDisplay">0.00</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- End Shipping Tab -->
 
         <!-- Advertisements Tab -->
         <div class="tab-content" id="ads-tab">
@@ -1007,6 +1048,7 @@
               <option value="rice">Rice</option>
               <option value="bakery">Bakery Products</option>
               <option value="beverages">Beverages</option>
+              <option value="others">Others</option>
             </select>
           </div>
           <div class="form-row">
@@ -2061,6 +2103,73 @@
           setTheme(nextTheme);
         });
       }
+
+      // Shipping management
+      const shippingForm = document.getElementById("shippingForm");
+      const shippingErrorMsg = document.getElementById("shippingErrorMsg");
+      const shippingSuccessMsg = document.getElementById("shippingSuccessMsg");
+      const shippingCostInput = document.getElementById("shippingCost");
+      const currentShippingDisplay = document.getElementById("currentShippingDisplay");
+
+      const loadShippingCost = async () => {
+        try {
+          const response = await fetch("../backend/settings/shipping.php", {
+            method: "GET"
+          });
+          const data = await response.json();
+          
+          if (data.success) {
+            shippingCostInput.value = data.shipping_cost;
+            currentShippingDisplay.textContent = parseFloat(data.shipping_cost).toFixed(2);
+          }
+        } catch (error) {
+          console.error("Error loading shipping cost:", error);
+        }
+      };
+
+      shippingForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const shippingCost = shippingCostInput.value;
+        
+        if (!shippingCost || parseFloat(shippingCost) < 0) {
+          shippingErrorMsg.textContent = "Please enter a valid shipping cost";
+          shippingErrorMsg.classList.add("show");
+          return;
+        }
+        
+        try {
+          const response = await fetch("../backend/settings/shipping.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ shipping_cost: shippingCost })
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            shippingSuccessMsg.textContent = "Shipping cost updated successfully!";
+            shippingSuccessMsg.classList.add("show");
+            shippingErrorMsg.classList.remove("show");
+            currentShippingDisplay.textContent = parseFloat(shippingCost).toFixed(2);
+            
+            setTimeout(() => {
+              shippingSuccessMsg.classList.remove("show");
+            }, 3000);
+          } else {
+            shippingErrorMsg.textContent = data.error || "Failed to update shipping cost";
+            shippingErrorMsg.classList.add("show");
+          }
+        } catch (error) {
+          shippingErrorMsg.textContent = "Error: " + error.message;
+          shippingErrorMsg.classList.add("show");
+        }
+      });
+
+      // Load shipping cost on page load
+      loadShippingCost();
     </script>
   </body>
 </html>
