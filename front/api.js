@@ -17,6 +17,9 @@ async function getSupabaseClient() {
 // PHP backend configuration for non-auth endpoints
 const API_BASE_URL = 'http://localhost/E%20commerce/New-folder/backend';
 const API_ENDPOINTS = {
+  auth: {
+    signup: `${API_BASE_URL}/auth/signup.php`
+  },
   contact: `${API_BASE_URL}/contact/submit.php`,
   products: `${API_BASE_URL}/products/list.php`,
   advertisements: `${API_BASE_URL}/advertisements/list.php`,
@@ -167,7 +170,7 @@ async function signupUser(username, email, password, confirmPassword) {
           success: false,
           status: 429,
           data: {
-            message: 'Too many signup attempts. Please wait a few minutes before trying again.'
+            message: 'Too many signup attempts for now. If you already created an account, try signing in. Otherwise wait a few minutes and try again.'
           }
         };
       }
@@ -182,11 +185,33 @@ async function signupUser(username, email, password, confirmPassword) {
       };
     }
 
+    const isExistingAccount = data.user?.identities?.length === 0;
+
+    if (!isExistingAccount) {
+      // Keep MySQL users table in sync for backend features that rely on it.
+      const syncResponse = await phpApiCall(API_ENDPOINTS.auth.signup, 'POST', {
+        username,
+        email,
+        password,
+        confirmPassword
+      });
+
+      if (!syncResponse.success) {
+        return {
+          success: false,
+          status: syncResponse.status || 500,
+          data: {
+            message: syncResponse.data?.message || 'Account created in auth provider, but failed to save user profile.'
+          }
+        };
+      }
+    }
+
     return {
       success: true,
       status: 201,
       data: {
-        message: data.user?.identities?.length === 0 
+        message: isExistingAccount
           ? 'Account already exists with this email'
           : 'Account created successfully! Check your email for verification.',
         userId: data.user?.id,
@@ -356,18 +381,22 @@ async function getOrders(filters = {}, adminToken = null) {
   if (adminToken) {
     queryParams.set('all', '1');
     queryParams.set('adminToken', adminToken);
-  } else {
-    if (filters.user_id) {
-      queryParams.set('user_id', String(filters.user_id));
-    }
+  }
 
-    if (filters.supabase_user_id) {
-      queryParams.set('supabase_user_id', filters.supabase_user_id);
-    }
+  if (filters.user_id) {
+    queryParams.set('user_id', String(filters.user_id));
+  }
 
-    if (filters.user_email) {
-      queryParams.set('user_email', filters.user_email);
-    }
+  if (filters.supabase_user_id) {
+    queryParams.set('supabase_user_id', filters.supabase_user_id);
+  }
+
+  if (filters.user_email) {
+    queryParams.set('user_email', filters.user_email);
+  }
+
+  if (filters.district) {
+    queryParams.set('district', filters.district);
   }
 
   const endpoint = queryParams.toString()
@@ -511,7 +540,16 @@ async function getUserProfile(filters = {}) {
     ? `${API_ENDPOINTS.users.profile}?${queryParams.toString()}`
     : API_ENDPOINTS.users.profile;
 
-  return phpApiCall(endpoint, 'GET');
+  const response = await phpApiCall(endpoint, 'GET');
+
+  if (response.success && response.data && response.data.data) {
+    return {
+      ...response,
+      data: response.data.data
+    };
+  }
+
+  return response;
 }
 
 async function updateUserProfile(payload) {

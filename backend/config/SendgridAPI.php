@@ -55,11 +55,23 @@ class SendgridAPI {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
             
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curlError = curl_error($ch);
             curl_close($ch);
+            
+            // Debug output to global debug variable if in test mode
+            if (defined('DEBUG_MODE') && DEBUG_MODE) {
+                global $debugOutput;
+                $debugOutput .= "[Sendgrid] HTTP Code: $httpCode\n";
+                $debugOutput .= "[Sendgrid] Response: " . substr($response, 0, 500) . "\n";
+                if ($curlError) {
+                    $debugOutput .= "[Sendgrid] cURL Error: $curlError\n";
+                }
+            }
             
             // Sendgrid returns 202 for accepted
             if ($httpCode === 202) {

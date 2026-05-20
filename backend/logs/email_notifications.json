@@ -1,0 +1,268 @@
+[
+    {
+        "timestamp": "2026-05-18 17:20:57",
+        "email": "ddddd@gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:20:59",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:21:00",
+        "email": "ndeshan@gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:21:01",
+        "email": "test@example.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:21:02",
+        "email": "tharupama@gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:21:03",
+        "email": "tharupama826@gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:21:05",
+        "email": "wushab@1321gmail.com",
+        "product_name": "🧪 Batch Test Pizza - 17:20:55",
+        "product_id": 999,
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:03",
+        "email": "tharupama@gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:03",
+        "email": "tharupama826@gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:04",
+        "email": "test@example.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:04",
+        "email": "wushab@1321gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:05",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:05",
+        "email": "ddddd@gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-18 17:24:06",
+        "email": "ndeshan@gmail.com",
+        "product_name": "Coconut Curry Rice with Grilled Chicken",
+        "product_id": "70",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:43",
+        "email": "tharupama@gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:43",
+        "email": "tharupama826@gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:44",
+        "email": "test@example.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:45",
+        "email": "wushab@1321gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:46",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:46",
+        "email": "ddddd@gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 06:40:47",
+        "email": "ndeshan@gmail.com",
+        "product_name": "Spicy rice",
+        "product_id": "71",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:17",
+        "email": "tharupama@gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:18",
+        "email": "tharupama826@gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:19",
+        "email": "test@example.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:19",
+        "email": "wushab@1321gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:20",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:20",
+        "email": "ddddd@gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-19 09:13:21",
+        "email": "ndeshan@gmail.com",
+        "product_name": "Submarine sandwich bun",
+        "product_id": "72",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 03:33:13",
+        "email": "tharupama826@gmail.com",
+        "product_name": "burger",
+        "product_id": "73",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 03:33:14",
+        "email": "test@example.com",
+        "product_name": "burger",
+        "product_id": "73",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 03:33:14",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "burger",
+        "product_id": "73",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 03:33:15",
+        "email": "ddddd@gmail.com",
+        "product_name": "burger",
+        "product_id": "73",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 03:33:15",
+        "email": "damika2223@gmail.com",
+        "product_name": "burger",
+        "product_id": "73",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 07:52:04",
+        "email": "tharupama826@gmail.com",
+        "product_name": "cheese kottu",
+        "product_id": "74",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 07:52:05",
+        "email": "test@example.com",
+        "product_name": "cheese kottu",
+        "product_id": "74",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 07:52:06",
+        "email": "naveenrasanka@gmail.com",
+        "product_name": "cheese kottu",
+        "product_id": "74",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 07:52:06",
+        "email": "ddddd@gmail.com",
+        "product_name": "cheese kottu",
+        "product_id": "74",
+        "status": "sent"
+    },
+    {
+        "timestamp": "2026-05-20 07:52:07",
+        "email": "damika2223@gmail.com",
+        "product_name": "cheese kottu",
+        "product_id": "74",
+        "status": "sent"
+    }
+]

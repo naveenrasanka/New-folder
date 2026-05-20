@@ -315,10 +315,10 @@
 
         <div class="auth-divider">or</div>
 
-        <div class="social-login">
+        <!-- <div class="social-login">
           <button type="button" class="social-btn" id="googleBtn">🔵 Google</button>
           <button type="button" class="social-btn" id="appleBtn">⬛ Apple</button>
-        </div>
+        </div> -->
 
         <div class="auth-footer">
           Already have an account? <a href="login.html">Sign in</a>
@@ -460,31 +460,14 @@
           } else {
             errorMsg.textContent = response.data.message || "Sign up failed. Please try again.";
             errorMsg.classList.add("show");
-            
-            // If rate limit error, disable button for 60 seconds
-            if (response.status === 429) {
-              submitBtn.disabled = true;
-              let countdown = 60;
-              const countdownInterval = setInterval(() => {
-                submitBtn.textContent = `Try again in ${countdown}s`;
-                countdown--;
-                if (countdown < 0) {
-                  clearInterval(countdownInterval);
-                  submitBtn.textContent = originalText;
-                  submitBtn.disabled = false;
-                }
-              }, 1000);
-            }
           }
         } catch (error) {
           console.error('Signup error:', error);
           errorMsg.textContent = "An error occurred. Please try again.";
           errorMsg.classList.add("show");
         } finally {
-          if (response?.status !== 429) {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-          }
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
         }
       });
 

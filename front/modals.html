@@ -46,45 +46,64 @@
       <form class="payment-form" id="paymentForm">
         <div class="form-section">
           <h3>Billing Information</h3>
+          <input type="text" placeholder="Full Name" data-billing-field="name" required />
+          <input type="email" placeholder="Email Address" data-billing-field="email" required />
+          <input type="text" placeholder="Street Address" data-billing-field="streetAddress" required />
           <div class="form-row">
-            <input type="text" placeholder="First Name" required />
-            <input type="text" placeholder="Last Name" required />
+            <select data-billing-field="district" required>
+              <option value="" disabled selected>Select District</option>
+              <option value="Ampara">Ampara</option>
+              <option value="Anuradhapura">Anuradhapura</option>
+              <option value="Badulla">Badulla</option>
+              <option value="Batticaloa">Batticaloa</option>
+              <option value="Colombo">Colombo</option>
+              <option value="Galle">Galle</option>
+              <option value="Gampaha">Gampaha</option>
+              <option value="Hambantota">Hambantota</option>
+              <option value="Jaffna">Jaffna</option>
+              <option value="Kalutara">Kalutara</option>
+              <option value="Kandy">Kandy</option>
+              <option value="Kegalle">Kegalle</option>
+              <option value="Kilinochchi">Kilinochchi</option>
+              <option value="Kurunegala">Kurunegala</option>
+              <option value="Mannar">Mannar</option>
+              <option value="Matale">Matale</option>
+              <option value="Matara">Matara</option>
+              <option value="Monaragala">Monaragala</option>
+              <option value="Mullaitivu">Mullaitivu</option>
+              <option value="Nuwara Eliya">Nuwara Eliya</option>
+              <option value="Polonnaruwa">Polonnaruwa</option>
+              <option value="Puttalam">Puttalam</option>
+              <option value="Ratnapura">Ratnapura</option>
+              <option value="Trincomalee">Trincomalee</option>
+              <option value="Vavuniya">Vavuniya</option>
+            </select>
+            <input type="text" placeholder="Postal Code" data-billing-field="postalCode" required />
           </div>
-          <input type="email" placeholder="Email Address" required />
-          <input type="text" placeholder="Street Address" required />
-          <div class="form-row">
-            <input type="text" placeholder="City" required />
-            <input type="text" placeholder="Postal Code" required />
-          </div>
-          <input type="tel" placeholder="Phone Number" required />
+          <input type="tel" placeholder="Phone Number" data-billing-field="phone" required />
         </div>
 
         <div class="form-section">
           <h3>Payment Method</h3>
           <div class="payment-methods">
             <label class="payment-method">
-              <input type="radio" name="paymentMethod" value="card" checked />
-              <span>Credit/Debit Card</span>
+              <input type="radio" name="paymentMethod" value="credit_card" checked />
+              <span>
+                <strong>Credit Card</strong>
+                <small>Pay online and continue to Stripe checkout.</small>
+              </span>
             </label>
             <label class="payment-method">
-              <input type="radio" name="paymentMethod" value="paypal" />
-              <span>PayPal</span>
-            </label>
-            <label class="payment-method">
-              <input type="radio" name="paymentMethod" value="bank" />
-              <span>Bank Transfer</span>
+              <input type="radio" name="paymentMethod" value="cash_on_delivery" />
+              <span>
+                <strong>Cash on Delivery</strong>
+                <small>Complete the order now and pay when it arrives.</small>
+              </span>
             </label>
           </div>
-        </div>
-
-        <div class="form-section" id="cardDetails">
-          <h3>Card Details</h3>
-          <input type="text" placeholder="Cardholder Name" required />
-          <input type="text" placeholder="Card Number (16 digits)" maxlength="16" required />
-          <div class="form-row">
-            <input type="text" placeholder="MM/YY" maxlength="5" required />
-            <input type="text" placeholder="CVV" maxlength="3" required />
-          </div>
+          <p style="color: var(--muted); margin: 0; line-height: 1.6;">
+            Choose credit card to continue to Stripe, or cash on delivery to place the order immediately.
+          </p>
         </div>
 
         <label class="checkbox-label">

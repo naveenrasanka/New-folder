@@ -1,0 +1,304 @@
+[18-May-2026 17:25:02 Europe/Berlin] Database connection established
+[18-May-2026 17:25:02 Europe/Berlin] Getting reviews for product ID: 67
+[18-May-2026 17:25:02 Europe/Berlin] Found 4 reviews for product 67
+[18-May-2026 17:25:11 Europe/Berlin] Database connection established
+[18-May-2026 17:25:11 Europe/Berlin] Getting reviews for product ID: 67
+[18-May-2026 17:25:11 Europe/Berlin] Found 5 reviews for product 67
+[18-May-2026 20:47:59 Europe/Berlin] Database connection established
+[18-May-2026 20:47:59 Europe/Berlin] Getting reviews for product ID: 25
+[18-May-2026 20:47:59 Europe/Berlin] Found 0 reviews for product 25
+[18-May-2026 20:47:59 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[18-May-2026 20:48:15 Europe/Berlin] Database connection established
+[18-May-2026 20:48:15 Europe/Berlin] Getting reviews for product ID: 25
+[18-May-2026 20:48:15 Europe/Berlin] Found 1 reviews for product 25
+[18-May-2026 20:49:47 Europe/Berlin] Database connection established
+[18-May-2026 20:49:47 Europe/Berlin] Getting reviews for product ID: 26
+[18-May-2026 20:49:47 Europe/Berlin] Found 5 reviews for product 26
+[18-May-2026 20:51:11 Europe/Berlin] Database connection established
+[18-May-2026 20:51:11 Europe/Berlin] Getting reviews for product ID: 60
+[18-May-2026 20:51:11 Europe/Berlin] Found 2 reviews for product 60
+[18-May-2026 21:16:01 Europe/Berlin] Database connection established
+[18-May-2026 21:16:01 Europe/Berlin] Getting reviews for product ID: 23
+[18-May-2026 21:16:01 Europe/Berlin] Found 2 reviews for product 23
+[18-May-2026 21:16:18 Europe/Berlin] Database connection established
+[18-May-2026 21:16:18 Europe/Berlin] Getting reviews for product ID: 23
+[18-May-2026 21:16:18 Europe/Berlin] Found 3 reviews for product 23
+[19-May-2026 04:50:59 Europe/Berlin] Database connection established
+[19-May-2026 04:50:59 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 04:50:59 Europe/Berlin] Found 0 reviews for product 70
+[19-May-2026 04:50:59 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 05:26:35 Europe/Berlin] Database connection established
+[19-May-2026 05:26:35 Europe/Berlin] Getting reviews for product ID: 24
+[19-May-2026 05:26:35 Europe/Berlin] Found 2 reviews for product 24
+[19-May-2026 05:29:35 Europe/Berlin] Database connection established
+[19-May-2026 05:29:35 Europe/Berlin] Getting reviews for product ID: 67
+[19-May-2026 05:29:35 Europe/Berlin] Found 5 reviews for product 67
+[19-May-2026 05:37:30 Europe/Berlin] Database connection established
+[19-May-2026 05:37:30 Europe/Berlin] Getting reviews for product ID: 24
+[19-May-2026 05:37:30 Europe/Berlin] Found 2 reviews for product 24
+[19-May-2026 05:38:57 Europe/Berlin] Database connection established
+[19-May-2026 05:38:57 Europe/Berlin] Getting reviews for product ID: 24
+[19-May-2026 05:38:57 Europe/Berlin] Found 3 reviews for product 24
+[19-May-2026 06:33:27 Europe/Berlin] Database connection established
+[19-May-2026 06:33:27 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 06:33:27 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 06:43:25 Europe/Berlin] Database connection established
+[19-May-2026 06:43:25 Europe/Berlin] Getting reviews for product ID: 66
+[19-May-2026 06:43:25 Europe/Berlin] Found 0 reviews for product 66
+[19-May-2026 06:43:25 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 07:45:34 Europe/Berlin] Database connection established
+[19-May-2026 07:45:34 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 07:45:34 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 07:48:54 Europe/Berlin] Database connection established
+[19-May-2026 07:48:54 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 07:48:55 Europe/Berlin] Found 3 reviews for product 23
+[19-May-2026 08:01:39 Europe/Berlin] Database connection established
+[19-May-2026 08:01:39 Europe/Berlin] Getting reviews for product ID: 59
+[19-May-2026 08:01:39 Europe/Berlin] Found 0 reviews for product 59
+[19-May-2026 08:01:39 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 11:14:43 Europe/Berlin] Database connection established
+[19-May-2026 11:14:43 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 11:14:43 Europe/Berlin] Found 0 reviews for product 70
+[19-May-2026 11:14:43 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 13:00:06 Europe/Berlin] Database connection established
+[19-May-2026 13:00:06 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 13:00:06 Europe/Berlin] Found 3 reviews for product 23
+[19-May-2026 15:22:31 Europe/Berlin] Database connection established
+[19-May-2026 15:22:31 Europe/Berlin] Getting reviews for product ID: 57
+[19-May-2026 15:22:31 Europe/Berlin] Found 0 reviews for product 57
+[19-May-2026 15:22:31 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 15:22:50 Europe/Berlin] Database connection established
+[19-May-2026 15:22:50 Europe/Berlin] Getting reviews for product ID: 57
+[19-May-2026 15:22:50 Europe/Berlin] Found 1 reviews for product 57
+[19-May-2026 16:34:24 Europe/Berlin] Database connection established
+[19-May-2026 16:34:24 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 16:34:24 Europe/Berlin] Found 3 reviews for product 23
+[19-May-2026 16:34:40 Europe/Berlin] Database connection established
+[19-May-2026 16:34:41 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 16:34:41 Europe/Berlin] Found 4 reviews for product 23
+[19-May-2026 16:44:53 Europe/Berlin] Database connection established
+[19-May-2026 16:44:53 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 16:44:53 Europe/Berlin] Found 0 reviews for product 70
+[19-May-2026 16:44:53 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 16:45:19 Europe/Berlin] Database connection established
+[19-May-2026 16:45:19 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 16:45:19 Europe/Berlin] Found 1 reviews for product 70
+[19-May-2026 16:45:31 Europe/Berlin] Database connection established
+[19-May-2026 16:45:31 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 16:45:31 Europe/Berlin] Found 1 reviews for product 70
+[19-May-2026 16:45:52 Europe/Berlin] Database connection established
+[19-May-2026 16:45:52 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 16:45:52 Europe/Berlin] Found 2 reviews for product 70
+[19-May-2026 16:46:00 Europe/Berlin] Database connection established
+[19-May-2026 16:46:00 Europe/Berlin] Getting reviews for product ID: 70
+[19-May-2026 16:46:00 Europe/Berlin] Found 2 reviews for product 70
+[19-May-2026 18:40:48 Europe/Berlin] Database connection established
+[19-May-2026 18:40:48 Europe/Berlin] Getting reviews for product ID: 57
+[19-May-2026 18:40:48 Europe/Berlin] Found 1 reviews for product 57
+[19-May-2026 18:40:57 Europe/Berlin] Database connection established
+[19-May-2026 18:40:57 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 18:40:57 Europe/Berlin] Found 4 reviews for product 23
+[19-May-2026 18:41:19 Europe/Berlin] Database connection established
+[19-May-2026 18:41:19 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 18:41:19 Europe/Berlin] Found 5 reviews for product 23
+[19-May-2026 18:44:36 Europe/Berlin] Database connection established
+[19-May-2026 18:44:36 Europe/Berlin] Getting reviews for product ID: 28
+[19-May-2026 18:44:36 Europe/Berlin] Found 2 reviews for product 28
+[19-May-2026 18:48:00 Europe/Berlin] Database connection established
+[19-May-2026 18:48:00 Europe/Berlin] Getting reviews for product ID: 28
+[19-May-2026 18:48:00 Europe/Berlin] Found 2 reviews for product 28
+[19-May-2026 18:48:15 Europe/Berlin] Database connection established
+[19-May-2026 18:48:15 Europe/Berlin] Getting reviews for product ID: 28
+[19-May-2026 18:48:15 Europe/Berlin] Found 3 reviews for product 28
+[19-May-2026 18:49:37 Europe/Berlin] Database connection established
+[19-May-2026 18:49:37 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 18:49:37 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 19:24:43 Europe/Berlin] Database connection established
+[19-May-2026 19:24:43 Europe/Berlin] Getting reviews for product ID: 25
+[19-May-2026 19:24:43 Europe/Berlin] Found 1 reviews for product 25
+[19-May-2026 19:40:28 Europe/Berlin] Database connection established
+[19-May-2026 19:40:28 Europe/Berlin] Getting reviews for product ID: 63
+[19-May-2026 19:40:28 Europe/Berlin] Found 0 reviews for product 63
+[19-May-2026 19:40:28 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 19:50:12 Europe/Berlin] Database connection established
+[19-May-2026 19:50:12 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 19:50:12 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 19:50:26 Europe/Berlin] Database connection established
+[19-May-2026 19:50:26 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 19:50:26 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 19:54:49 Europe/Berlin] Database connection established
+[19-May-2026 19:54:49 Europe/Berlin] Getting reviews for product ID: 22
+[19-May-2026 19:54:49 Europe/Berlin] Found 4 reviews for product 22
+[19-May-2026 20:03:48 Europe/Berlin] Database connection established
+[19-May-2026 20:03:48 Europe/Berlin] Getting reviews for product ID: 22
+[19-May-2026 20:03:48 Europe/Berlin] Found 4 reviews for product 22
+[19-May-2026 20:04:12 Europe/Berlin] Database connection established
+[19-May-2026 20:04:12 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 20:04:12 Europe/Berlin] Found 5 reviews for product 23
+[19-May-2026 20:40:31 Europe/Berlin] Database connection established
+[19-May-2026 20:40:31 Europe/Berlin] Getting reviews for product ID: 23
+[19-May-2026 20:40:31 Europe/Berlin] Found 5 reviews for product 23
+[19-May-2026 20:44:23 Europe/Berlin] Database connection established
+[19-May-2026 20:44:23 Europe/Berlin] Getting reviews for product ID: 62
+[19-May-2026 20:44:23 Europe/Berlin] Found 0 reviews for product 62
+[19-May-2026 20:44:23 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 20:44:57 Europe/Berlin] Database connection established
+[19-May-2026 20:44:57 Europe/Berlin] Getting reviews for product ID: 62
+[19-May-2026 20:44:57 Europe/Berlin] Found 0 reviews for product 62
+[19-May-2026 20:44:57 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 20:45:31 Europe/Berlin] Database connection established
+[19-May-2026 20:45:31 Europe/Berlin] Getting reviews for product ID: 28
+[19-May-2026 20:45:31 Europe/Berlin] Found 3 reviews for product 28
+[19-May-2026 20:52:43 Europe/Berlin] Database connection established
+[19-May-2026 20:52:43 Europe/Berlin] Getting reviews for product ID: 22
+[19-May-2026 20:52:43 Europe/Berlin] Found 4 reviews for product 22
+[19-May-2026 20:57:07 Europe/Berlin] Database connection established
+[19-May-2026 20:57:07 Europe/Berlin] Getting reviews for product ID: 26
+[19-May-2026 20:57:07 Europe/Berlin] Found 5 reviews for product 26
+[19-May-2026 21:11:51 Europe/Berlin] Database connection established
+[19-May-2026 21:11:51 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 21:11:51 Europe/Berlin] Found 6 reviews for product 27
+[19-May-2026 21:12:21 Europe/Berlin] Database connection established
+[19-May-2026 21:12:21 Europe/Berlin] Getting reviews for product ID: 27
+[19-May-2026 21:12:21 Europe/Berlin] Found 7 reviews for product 27
+[19-May-2026 21:37:28 Europe/Berlin] Database connection established
+[19-May-2026 21:37:28 Europe/Berlin] Getting reviews for product ID: 57
+[19-May-2026 21:37:28 Europe/Berlin] Found 1 reviews for product 57
+[19-May-2026 21:38:00 Europe/Berlin] Database connection established
+[19-May-2026 21:38:00 Europe/Berlin] Getting reviews for product ID: 57
+[19-May-2026 21:38:00 Europe/Berlin] Found 2 reviews for product 57
+[19-May-2026 21:43:04 Europe/Berlin] Database connection established
+[19-May-2026 21:43:04 Europe/Berlin] Getting reviews for product ID: 65
+[19-May-2026 21:43:04 Europe/Berlin] Found 0 reviews for product 65
+[19-May-2026 21:43:04 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 21:43:35 Europe/Berlin] Database connection established
+[19-May-2026 21:43:35 Europe/Berlin] Getting reviews for product ID: 65
+[19-May-2026 21:43:35 Europe/Berlin] Found 1 reviews for product 65
+[19-May-2026 21:49:05 Europe/Berlin] Database connection established
+[19-May-2026 21:49:05 Europe/Berlin] Getting reviews for product ID: 59
+[19-May-2026 21:49:05 Europe/Berlin] Found 0 reviews for product 59
+[19-May-2026 21:49:05 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[19-May-2026 21:49:38 Europe/Berlin] Database connection established
+[19-May-2026 21:49:38 Europe/Berlin] Getting reviews for product ID: 59
+[19-May-2026 21:49:38 Europe/Berlin] Found 1 reviews for product 59
+[19-May-2026 21:54:43 Europe/Berlin] Database connection established
+[19-May-2026 21:54:43 Europe/Berlin] Getting reviews for product ID: 26
+[19-May-2026 21:54:43 Europe/Berlin] Found 5 reviews for product 26
+[19-May-2026 21:55:09 Europe/Berlin] Database connection established
+[19-May-2026 21:55:09 Europe/Berlin] Getting reviews for product ID: 26
+[19-May-2026 21:55:10 Europe/Berlin] Found 6 reviews for product 26
+[20-May-2026 03:19:01 Europe/Berlin] Database connection established
+[20-May-2026 03:19:01 Europe/Berlin] Getting reviews for product ID: 57
+[20-May-2026 03:19:01 Europe/Berlin] Found 2 reviews for product 57
+[20-May-2026 03:47:18 Europe/Berlin] Database connection established
+[20-May-2026 03:47:18 Europe/Berlin] Getting reviews for product ID: 23
+[20-May-2026 03:47:18 Europe/Berlin] Found 5 reviews for product 23
+[20-May-2026 03:50:06 Europe/Berlin] Database connection established
+[20-May-2026 03:50:06 Europe/Berlin] Getting reviews for product ID: 27
+[20-May-2026 03:50:06 Europe/Berlin] Found 7 reviews for product 27
+[20-May-2026 03:50:32 Europe/Berlin] Database connection established
+[20-May-2026 03:50:32 Europe/Berlin] Getting reviews for product ID: 27
+[20-May-2026 03:50:32 Europe/Berlin] Found 8 reviews for product 27
+[20-May-2026 03:52:26 Europe/Berlin] Database connection established
+[20-May-2026 03:52:26 Europe/Berlin] Getting reviews for product ID: 72
+[20-May-2026 03:52:26 Europe/Berlin] Found 0 reviews for product 72
+[20-May-2026 03:52:26 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[20-May-2026 03:52:34 Europe/Berlin] Database connection established
+[20-May-2026 03:52:34 Europe/Berlin] Getting reviews for product ID: 71
+[20-May-2026 03:52:34 Europe/Berlin] Found 0 reviews for product 71
+[20-May-2026 03:52:34 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[20-May-2026 03:52:42 Europe/Berlin] Database connection established
+[20-May-2026 03:52:42 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 03:52:42 Europe/Berlin] Found 1 reviews for product 65
+[20-May-2026 05:20:09 Europe/Berlin] Database connection established
+[20-May-2026 05:20:09 Europe/Berlin] Getting reviews for product ID: 60
+[20-May-2026 05:20:09 Europe/Berlin] Found 2 reviews for product 60
+[20-May-2026 05:22:14 Europe/Berlin] Database connection established
+[20-May-2026 05:22:14 Europe/Berlin] Getting reviews for product ID: 60
+[20-May-2026 05:22:14 Europe/Berlin] Found 2 reviews for product 60
+[20-May-2026 05:24:48 Europe/Berlin] Database connection established
+[20-May-2026 05:24:48 Europe/Berlin] Getting reviews for product ID: 62
+[20-May-2026 05:24:48 Europe/Berlin] Found 0 reviews for product 62
+[20-May-2026 05:24:48 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[20-May-2026 05:24:58 Europe/Berlin] Database connection established
+[20-May-2026 05:24:58 Europe/Berlin] Getting reviews for product ID: 62
+[20-May-2026 05:24:58 Europe/Berlin] Found 1 reviews for product 62
+[20-May-2026 05:26:58 Europe/Berlin] Database connection established
+[20-May-2026 05:26:58 Europe/Berlin] Getting reviews for product ID: 60
+[20-May-2026 05:26:58 Europe/Berlin] Found 2 reviews for product 60
+[20-May-2026 05:27:04 Europe/Berlin] Database connection established
+[20-May-2026 05:27:04 Europe/Berlin] Getting reviews for product ID: 60
+[20-May-2026 05:27:04 Europe/Berlin] Found 3 reviews for product 60
+[20-May-2026 05:27:47 Europe/Berlin] Database connection established
+[20-May-2026 05:27:47 Europe/Berlin] Getting reviews for product ID: 28
+[20-May-2026 05:27:47 Europe/Berlin] Found 3 reviews for product 28
+[20-May-2026 05:28:01 Europe/Berlin] Database connection established
+[20-May-2026 05:28:01 Europe/Berlin] Getting reviews for product ID: 28
+[20-May-2026 05:28:01 Europe/Berlin] Found 4 reviews for product 28
+[20-May-2026 05:46:43 Europe/Berlin] Database connection established
+[20-May-2026 05:46:43 Europe/Berlin] Getting reviews for product ID: 28
+[20-May-2026 05:46:43 Europe/Berlin] Found 4 reviews for product 28
+[20-May-2026 05:46:50 Europe/Berlin] Database connection established
+[20-May-2026 05:46:50 Europe/Berlin] Getting reviews for product ID: 71
+[20-May-2026 05:46:50 Europe/Berlin] Found 0 reviews for product 71
+[20-May-2026 05:46:50 Europe/Berlin] PHP Deprecated:  round(): Passing null to parameter #1 ($num) of type int|float is deprecated in C:\xampp\htdocs\E commerce\New-folder\backend\reviews\get.php on line 88
+[20-May-2026 05:47:03 Europe/Berlin] Database connection established
+[20-May-2026 05:47:03 Europe/Berlin] Getting reviews for product ID: 71
+[20-May-2026 05:47:03 Europe/Berlin] Found 1 reviews for product 71
+[20-May-2026 05:49:48 Europe/Berlin] Database connection established
+[20-May-2026 05:49:48 Europe/Berlin] Getting reviews for product ID: 70
+[20-May-2026 05:49:48 Europe/Berlin] Found 2 reviews for product 70
+[20-May-2026 05:49:56 Europe/Berlin] Database connection established
+[20-May-2026 05:49:56 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 05:49:56 Europe/Berlin] Found 1 reviews for product 65
+[20-May-2026 05:53:43 Europe/Berlin] Database connection established
+[20-May-2026 05:53:43 Europe/Berlin] Getting reviews for product ID: 68
+[20-May-2026 05:53:43 Europe/Berlin] Found 1 reviews for product 68
+[20-May-2026 06:41:18 Europe/Berlin] Database connection established
+[20-May-2026 06:41:18 Europe/Berlin] Getting reviews for product ID: 24
+[20-May-2026 06:41:18 Europe/Berlin] Found 3 reviews for product 24
+[20-May-2026 06:41:23 Europe/Berlin] Database connection established
+[20-May-2026 06:41:23 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:41:23 Europe/Berlin] Found 1 reviews for product 65
+[20-May-2026 06:42:26 Europe/Berlin] Database connection established
+[20-May-2026 06:42:26 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:42:26 Europe/Berlin] Found 1 reviews for product 65
+[20-May-2026 06:42:47 Europe/Berlin] Database connection established
+[20-May-2026 06:42:47 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:42:47 Europe/Berlin] Found 2 reviews for product 65
+[20-May-2026 06:43:02 Europe/Berlin] Database connection established
+[20-May-2026 06:43:02 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:43:02 Europe/Berlin] Found 2 reviews for product 65
+[20-May-2026 06:44:30 Europe/Berlin] Database connection established
+[20-May-2026 06:44:30 Europe/Berlin] Getting reviews for product ID: 57
+[20-May-2026 06:44:30 Europe/Berlin] Found 2 reviews for product 57
+[20-May-2026 06:44:39 Europe/Berlin] Database connection established
+[20-May-2026 06:44:39 Europe/Berlin] Getting reviews for product ID: 62
+[20-May-2026 06:44:39 Europe/Berlin] Found 1 reviews for product 62
+[20-May-2026 06:44:43 Europe/Berlin] Database connection established
+[20-May-2026 06:44:43 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:44:43 Europe/Berlin] Found 2 reviews for product 65
+[20-May-2026 06:44:53 Europe/Berlin] Database connection established
+[20-May-2026 06:44:53 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:44:53 Europe/Berlin] Found 2 reviews for product 65
+[20-May-2026 06:52:30 Europe/Berlin] Database connection established
+[20-May-2026 06:52:30 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:52:30 Europe/Berlin] Found 2 reviews for product 65
+[20-May-2026 06:52:42 Europe/Berlin] Database connection established
+[20-May-2026 06:52:42 Europe/Berlin] Getting reviews for product ID: 65
+[20-May-2026 06:52:42 Europe/Berlin] Found 3 reviews for product 65
+[20-May-2026 07:44:02 Europe/Berlin] Database connection established
+[20-May-2026 07:44:02 Europe/Berlin] Getting reviews for product ID: 23
+[20-May-2026 07:44:02 Europe/Berlin] Found 5 reviews for product 23
+[20-May-2026 07:45:45 Europe/Berlin] Database connection established
+[20-May-2026 07:45:45 Europe/Berlin] Getting reviews for product ID: 27
+[20-May-2026 07:45:45 Europe/Berlin] Found 8 reviews for product 27
+[20-May-2026 07:45:48 Europe/Berlin] Database connection established
+[20-May-2026 07:45:48 Europe/Berlin] Getting reviews for product ID: 26
+[20-May-2026 07:45:48 Europe/Berlin] Found 6 reviews for product 26
+[20-May-2026 07:46:06 Europe/Berlin] Database connection established
+[20-May-2026 07:46:06 Europe/Berlin] Getting reviews for product ID: 26
+[20-May-2026 07:46:06 Europe/Berlin] Found 7 reviews for product 26
+[20-May-2026 17:09:33 Europe/Berlin] Database connection established
+[20-May-2026 17:09:33 Europe/Berlin] Getting reviews for product ID: 24
+[20-May-2026 17:09:34 Europe/Berlin] Found 3 reviews for product 24

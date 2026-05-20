@@ -18,7 +18,8 @@ function getDBConnection() {
         $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
         return $pdo;
     } catch (PDOException $e) {
-        die("Connection failed: " . $e->getMessage());
+        // Rethrow so callers can handle JSON responses instead of raw HTML
+        throw $e;
     }
 }
 ?>

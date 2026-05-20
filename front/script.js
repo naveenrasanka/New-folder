@@ -407,6 +407,32 @@ const showStoredPaymentMessage = () => {
   }
 };
 
+const handleTrackOrder = (e) => {
+  e.preventDefault();
+  
+  // Check if user is logged in
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  
+  if (!user || !user.email) {
+    // User not logged in - show message
+    showToast("Please login to view your order details");
+    return;
+  }
+  
+  // User is logged in - redirect to account page and scroll to orders
+  window.location.href = 'account.html#accountOrdersList';
+};
+
+const handleGetHelp = (e) => {
+  e.preventDefault();
+  
+  // Scroll to contact details section
+  const contactSection = document.getElementById('contactDetailsSection');
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
 const setTheme = (theme) => {
   document.documentElement.dataset.theme = theme;
   state.theme = theme;
@@ -447,13 +473,16 @@ const renderOrders = (orders) => {
       const itemsHTML = (order.items && Array.isArray(order.items) && order.items.length > 0)
         ? `<div class="order-items-list">
              <h5 style="margin: 8px 0 6px 0; font-size: 0.9rem; font-weight: 600;">Items Ordered:</h5>
-             ${order.items.map(item => `
+             ${order.items.map(item => {
+               const sizeText = item.product_size ? ` (${item.product_size})` : '';
+               return `
                <div class="order-item-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 4px 0; color: var(--text);">
-                 <span style="flex: 1;">${item.product_name || 'Unknown Product'}</span>
+                 <span style="flex: 1;">${item.product_name || 'Unknown Product'}${sizeText}</span>
                  <span style="color: var(--muted); margin: 0 8px;">×${item.quantity}</span>
                  <span style="color: var(--primary); font-weight: 600; min-width: 70px; text-align: right;">${currency.format(item.price || 0)}</span>
                </div>
-             `).join('')}
+             `;
+             }).join('')}
            </div>`
         : `<div style="margin-top: 8px; color: var(--muted); font-size: 0.85rem;">No items found for this order.</div>`;
 
@@ -567,6 +596,7 @@ const renderProducts = (items) => {
       <span class="tag">${product.tag}</span>
       <img src="${product.image}" alt="${product.name}" />
       <h4>${product.name}</h4>
+      ${((product.category === 'pizza' || product.category === 'rice' || product.category === 'kottu') && product.size) ? `<div class="size-badge" style="font-size: 0.9rem; margin: 4px 0; padding: 4px 8px; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #6366f1; font-weight: 600; text-transform: capitalize; width: fit-content;">${product.category === 'pizza' ? '🍕' : product.category === 'rice' ? '🍚' : '🥘'} ${product.size}</div>` : ''}
       <div class="product-meta">
         <span class="rating">★ ${product.rating}</span>
         <span class="price">${currency.format(product.price)}</span>
@@ -574,6 +604,7 @@ const renderProducts = (items) => {
       <div class="stock-status" style="font-size: 0.85rem; margin: 4px 0; font-weight: 500; color: ${product.is_available == 1 ? '#10b981' : '#ef4444'};">
             ${((product.category === 'beverages') ? (product.is_available == 1 && Number(product.stock) > 0) : (product.is_available == 1)) ? '✓ Available' : '✗ Unavailable'}
           </div>
+      ${product.category === 'beverages' ? `<div style="font-size: 0.8rem; margin: 4px 0; padding: 4px 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; color: #3b82f6; font-weight: 500;">📦 Stock: ${Number(product.stock)}</div>` : ''}
           <div class="product-actions">
             <button class="ghost-btn" data-action="wishlist">${
               state.wishlist.has(product.id) ? "Saved" : "Wishlist"
@@ -630,11 +661,12 @@ const renderCart = () => {
       
       const lineTotal = product.price * qty;
       subtotal += lineTotal;
+      const sizeText = ((product.category === 'pizza' || product.category === 'rice' || product.category === 'kottu') && product.size) ? ` · ${product.category === 'pizza' ? '🍕' : product.category === 'rice' ? '🍚' : '🥘'} ${product.size}` : '';
       return `
       <div class="cart-item">
         <div>
           <h5>${product.name}</h5>
-          <p>${currency.format(product.price)} · ${product.tag}</p>
+          <p>${currency.format(product.price)} · ${product.tag}${sizeText}</p>
         </div>
         <div class="cart-item-controls">
           <button class="icon-btn" data-cart-action="decrease" data-id="${id}">-</button>
@@ -1282,12 +1314,17 @@ function setupWishlistSystem() {
         if (!product) return "";
         const imageSrc = product.image || "https://via.placeholder.com/100?text=BUY+LK";
         
+        const sizeDisplay = ((product.category === 'pizza' || product.category === 'rice' || product.category === 'kottu') && product.size)
+          ? `<p style="font-size: 0.85rem; color: var(--muted); margin: 4px 0;">${product.category === 'pizza' ? '🍕' : product.category === 'rice' ? '🍚' : '🥘'} ${product.size}</p>`
+          : '';
+        
         return `
           <div class="wishlist-item">
             <img src="${imageSrc}" alt="${product.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100?text=BUY+LK';" />
             <div class="wishlist-item-info">
               <h4>${product.name}</h4>
               <p>${product.tag}</p>
+              ${sizeDisplay}
               <div class="wishlist-item-price">${currency.format(product.price)}</div>
               <div class="wishlist-item-actions">
                 <button class="add-to-cart-btn" data-add-to-cart="${id}">Add to Cart</button>
@@ -1356,14 +1393,96 @@ function setupPaymentSystem() {
   const closePaymentBtn = document.getElementById("closePayment");
   const paymentForm = document.getElementById("paymentForm");
   const checkoutBtn = document.getElementById("checkoutBtn");
+  const nameField = paymentForm?.querySelector('[data-billing-field="name"]');
+  const emailField = paymentForm?.querySelector('[data-billing-field="email"]');
+  const streetAddressField = paymentForm?.querySelector('[data-billing-field="streetAddress"]');
+  const districtField = paymentForm?.querySelector('[data-billing-field="district"]');
+  const postalCodeField = paymentForm?.querySelector('[data-billing-field="postalCode"]');
+  const phoneField = paymentForm?.querySelector('[data-billing-field="phone"]');
   
   if (!paymentModal) {
     console.error("Payment modal element not found");
     return false;
   }
+
+  const fillBillingDefaults = async () => {
+    if (!paymentForm || !state.user || (!state.user.loggedIn && !state.user.email)) {
+      return;
+    }
+
+    if (nameField) {
+      const fallbackName = state.user.fullname || state.user.username || (state.user.email ? state.user.email.split("@")[0] : "");
+      nameField.value = fallbackName || "";
+    }
+
+    if (emailField && state.user.email) {
+      emailField.value = state.user.email;
+    }
+
+    const storedAddress = String(state.user.address || "").trim();
+    if (streetAddressField && storedAddress) {
+      streetAddressField.value = storedAddress;
+    }
+
+    const storedDistrict = String(state.user.district || "").trim();
+    if (districtField && storedDistrict) {
+      districtField.value = storedDistrict;
+    }
+
+    const storedPostalCode = String(state.user.postalcode || state.user.postalCode || "").trim();
+    if (postalCodeField && storedPostalCode) {
+      postalCodeField.value = storedPostalCode;
+    }
+
+    const storedPhone = String(state.user.phone || "").trim();
+    if (phoneField && storedPhone) {
+      phoneField.value = storedPhone;
+    }
+
+    if (typeof getUserProfile === "function" && state.user.email && ((!streetAddressField || !streetAddressField.value.trim()) || (phoneField && !phoneField.value.trim()) || (districtField && !districtField.value.trim()) || (postalCodeField && !postalCodeField.value.trim()))) {
+      try {
+        const response = await getUserProfile({ email: state.user.email });
+        const serverData = response?.data?.data || response?.data || null;
+        const fetchedAddress = String(serverData?.address || "").trim();
+        const fetchedPhone = String(serverData?.phone || "").trim();
+        const fetchedDistrict = String(serverData?.district || "").trim();
+        const fetchedPostalCode = String(serverData?.postalcode || serverData?.postalCode || "").trim();
+
+        if (streetAddressField && fetchedAddress && !streetAddressField.value.trim()) {
+          streetAddressField.value = fetchedAddress;
+        }
+
+        if (districtField && fetchedDistrict && !districtField.value.trim()) {
+          districtField.value = fetchedDistrict;
+        }
+
+        if (postalCodeField && fetchedPostalCode && !postalCodeField.value.trim()) {
+          postalCodeField.value = fetchedPostalCode;
+        }
+
+        if (fetchedPhone) {
+          if (phoneField && !phoneField.value.trim()) {
+            phoneField.value = fetchedPhone;
+          }
+          if (typeof state.user === "object") {
+            state.user = {
+              ...state.user,
+              address: fetchedAddress || state.user.address,
+              district: fetchedDistrict || state.user.district,
+              postalcode: fetchedPostalCode || state.user.postalcode,
+              phone: fetchedPhone,
+            };
+            localStorage.setItem("user", JSON.stringify(state.user));
+          }
+        }
+      } catch (error) {
+        console.warn("Unable to preload billing phone", error);
+      }
+    }
+  };
   
   // Open payment modal
-  function openPayment() {
+  async function openPayment() {
     console.log("Opening payment modal");
     if (state.cart.size === 0) {
       showToast("Your cart is empty");
@@ -1386,6 +1505,8 @@ function setupPaymentSystem() {
     document.getElementById("paymentSubtotal").textContent = currency.format(subtotal);
     document.getElementById("paymentShipping").textContent = currency.format(shipping);
     document.getElementById("paymentTotal").textContent = currency.format(total);
+
+    await fillBillingDefaults();
     
     // Show modal
     paymentModal.classList.add("show");
@@ -1437,16 +1558,12 @@ function setupPaymentSystem() {
       submitBtn.disabled = true;
       
       try {
-        const billingInputs = paymentForm.querySelectorAll(
-          'input:not([type="checkbox"]):not([type="submit"])'
-        );
-        const firstName = billingInputs[0]?.value.trim() || "";
-        const lastName = billingInputs[1]?.value.trim() || "";
-        const email = billingInputs[2]?.value.trim() || state.user?.email || "";
-        const streetAddress = billingInputs[3]?.value.trim() || "";
-        const city = billingInputs[4]?.value.trim() || "";
-        const postalCode = billingInputs[5]?.value.trim() || "";
-        const phone = billingInputs[6]?.value.trim() || "";
+        const name = paymentForm.querySelector('[data-billing-field="name"]')?.value.trim() || "";
+        const email = paymentForm.querySelector('[data-billing-field="email"]')?.value.trim() || state.user?.email || "";
+        const streetAddress = paymentForm.querySelector('[data-billing-field="streetAddress"]')?.value.trim() || "";
+        const district = paymentForm.querySelector('[data-billing-field="district"]')?.value.trim() || "";
+        const postalCode = paymentForm.querySelector('[data-billing-field="postalCode"]')?.value.trim() || "";
+        const phone = paymentForm.querySelector('[data-billing-field="phone"]')?.value.trim() || "";
 
         const cartItemsForCheckout = [];
         state.cart.forEach((quantity, productId) => {
@@ -1468,6 +1585,20 @@ function setupPaymentSystem() {
           throw new Error("Your cart is empty.");
         }
 
+        // Validate stock for beverages
+        for (const item of cartItemsForCheckout) {
+          const product = products.find((p) => p.id == item.id);
+          if (product && product.category === 'beverages') {
+            const availableStock = Number(product.stock) || 0;
+            if (item.quantity > availableStock) {
+              throw new Error(`${product.name}: Only ${availableStock} available in stock. Please reduce quantity to ${availableStock} or less.`);
+            }
+            if (availableStock <= 0) {
+              throw new Error(`${product.name} is currently out of stock.`);
+            }
+          }
+        }
+
         const subtotal = cartItemsForCheckout.reduce(
           (sum, item) => sum + Number(item.price) * Number(item.quantity),
           0
@@ -1485,10 +1616,10 @@ function setupPaymentSystem() {
           email,
           payment_method: selectedPaymentMethod,
           billingDetails: {
-            firstName,
-            lastName,
+            name,
             streetAddress,
-            city,
+            city: district,
+            district,
             postalCode,
             phone,
           },
@@ -1499,9 +1630,10 @@ function setupPaymentSystem() {
           user_id: Number.isFinite(userIdNumeric) && userIdNumeric > 0 ? userIdNumeric : null,
           supabase_user_id: state.user?.id && !Number.isFinite(userIdNumeric) ? String(state.user.id) : "",
           user_email: email,
-          customer_name: `${firstName} ${lastName}`.trim(),
+          customer_name: name,
           customer_phone: phone,
           customer_address: streetAddress,
+          customer_district: district,
           payment_method: selectedPaymentMethod,
           payment_status: paymentStatus,
           total_amount: subtotal + shipping,
@@ -1584,6 +1716,24 @@ if (document.readyState === "loading") {
     setupPaymentSystem();
     setupWishlistSystem();
     setupSiteReviewsSection();
+    
+    // Track order button handler
+    const trackOrderBtn = document.getElementById('trackOrderBtn');
+    if (trackOrderBtn) {
+      trackOrderBtn.addEventListener('click', handleTrackOrder);
+    }
+    
+    // Get help button handler
+    const getHelpBtn = document.getElementById('getHelpBtn');
+    if (getHelpBtn) {
+      getHelpBtn.addEventListener('click', handleGetHelp);
+    }
+    
+    // Request quote button handler
+    const requestQuoteBtn = document.getElementById('requestQuoteBtn');
+    if (requestQuoteBtn) {
+      requestQuoteBtn.addEventListener('click', handleGetHelp);
+    }
   });
 } else {
   setupPaymentSystem();

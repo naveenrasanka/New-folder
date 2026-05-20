@@ -9,6 +9,8 @@
   const profileEmail = document.getElementById("profileEmail");
   const profilePhone = document.getElementById("profilePhone");
   const profileAddress = document.getElementById("profileAddress");
+  const profileDistrict = document.getElementById("profileDistrict");
+  const profilePostalCode = document.getElementById("profilePostalCode");
   const accountGreeting = document.getElementById("accountGreeting");
   const ordersList = document.getElementById("accountOrdersList");
   const reviewsList = document.getElementById("accountReviewsList");
@@ -80,6 +82,8 @@ const fillProfileForm = (user) => {
   profileEmail.value = user?.email || "";
   profilePhone.value = user?.phone || "";
   profileAddress.value = user?.address || "";
+  if (profileDistrict) profileDistrict.value = user?.district || "";
+  if (profilePostalCode) profilePostalCode.value = user?.postalcode || user?.postalCode || "";
 
   if (accountGreeting) {
     accountGreeting.textContent = `Welcome back, ${fallbackName || "customer"}`;
@@ -106,6 +110,18 @@ const renderOrders = (orders) => {
       const statusClass = typeof getOrderStatusClass === "function"
         ? getOrderStatusClass(status)
         : "status-pending";
+      
+      // Display order items with sizes
+      const itemsDisplay = (order.items && Array.isArray(order.items) && order.items.length > 0)
+        ? `<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+             <p><strong>Items:</strong></p>
+             ${order.items.map(item => {
+               const sizeText = item.product_size ? ` (${item.product_size})` : '';
+               return `<p style="margin: 4px 0; font-size: 0.9rem;">• ${item.product_name}${sizeText} ×${item.quantity} - LKR ${Number(item.price || 0).toFixed(2)}</p>`;
+             }).join('')}
+           </div>`
+        : '';
+      
       return `
         <article class="order-card">
           <div class="order-card-head">
@@ -114,6 +130,7 @@ const renderOrders = (orders) => {
           </div>
           <p><strong>Total:</strong> LKR ${Number(order.total_amount || 0).toFixed(2)}</p>
           <p><strong>Placed:</strong> ${formattedDate}</p>
+          ${itemsDisplay}
         </article>
       `;
     })
@@ -259,10 +276,13 @@ const initAccount = () => {
       }
 
       if (response.success && response.data) {
+        const serverData = response.data.data || response.data;
         const updated = updateLocalUser({
-          fullname: response.data.username || user.fullname,
-          phone: response.data.phone || "",
-          address: response.data.address || ""
+          fullname: serverData.username || user.fullname,
+          phone: serverData.phone || "",
+          address: serverData.address || "",
+          district: serverData.district || "",
+          postalcode: serverData.postalcode || ""
         });
         if (updated) {
           fillProfileForm(updated);
@@ -284,10 +304,13 @@ const initAccount = () => {
       const storedUser = getStoredUser();
       const payload = {
         user_id: storedUser?.id || null,
-        email: storedUser?.email || "",
+        current_email: storedUser?.email || "",
+        email: profileEmail?.value.trim() || storedUser?.email || "",
         username: profileName.value.trim(),
         phone: profilePhone.value.trim(),
-        address: profileAddress.value.trim()
+        address: profileAddress.value.trim(),
+        district: profileDistrict?.value.trim() || "",
+        postalcode: profilePostalCode?.value.trim() || ""
       };
 
       console.log("Profile save payload", payload);
@@ -303,16 +326,22 @@ const initAccount = () => {
           return;
         }
 
-        const serverData = response.data?.data;
+        const serverData = response.data?.data || response.data;
         serverUpdated = Boolean(response.data?.updated) || Boolean(response.data?.created);
 
         if (serverData) {
+          const serverEmail = serverData.email || payload.email;
           const serverPhone = serverData.phone || "";
           const serverAddress = serverData.address || "";
+          const serverDistrict = serverData.district || "";
+          const serverPostalcode = serverData.postalcode || "";
           const serverName = serverData.username || payload.username;
           const matchesPayload =
+            serverEmail === payload.email &&
             serverPhone === payload.phone &&
             serverAddress === payload.address &&
+            serverDistrict === payload.district &&
+            serverPostalcode === payload.postalcode &&
             (payload.username === "" || serverName === payload.username);
 
           if (matchesPayload) {
@@ -322,8 +351,11 @@ const initAccount = () => {
           if (serverUpdated) {
             updated = updateLocalUser({
               fullname: serverName,
+              email: serverEmail,
               phone: serverPhone,
-              address: serverAddress
+              address: serverAddress,
+              district: serverDistrict,
+              postalcode: serverPostalcode
             });
           }
         }
@@ -332,8 +364,11 @@ const initAccount = () => {
       if (!updated) {
         updated = updateLocalUser({
           fullname: payload.username,
+          email: payload.email,
           phone: payload.phone,
-          address: payload.address
+          address: payload.address,
+          district: payload.district,
+          postalcode: payload.postalcode
         });
       }
 
@@ -358,5 +393,12 @@ const initAccount = () => {
     myOrdersBtn.addEventListener("click", () => {
       ordersList.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  // Handle scroll to orders section if coming from track order button
+  if (window.location.hash === '#accountOrdersList' && ordersList) {
+    setTimeout(() => {
+      ordersList.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 500);
   }
 })();

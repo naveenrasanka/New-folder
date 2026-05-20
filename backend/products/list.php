@@ -55,9 +55,21 @@ try {
     
     // GET all products
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $stmt = $pdo->prepare("SELECT id, name, category, price, rating, tag, image, description, stock, is_available FROM products ORDER BY id ASC");
-        $stmt->execute();
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            // Try to select with size column
+            $stmt = $pdo->prepare("SELECT id, name, category, price, rating, tag, image, description, stock, size, is_available FROM products ORDER BY id ASC");
+            $stmt->execute();
+            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // If size column doesn't exist, select without it
+            $stmt = $pdo->prepare("SELECT id, name, category, price, rating, tag, image, description, stock, is_available FROM products ORDER BY id ASC");
+            $stmt->execute();
+            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Add null size to each product for compatibility
+            foreach ($products as &$product) {
+                $product['size'] = null;
+            }
+        }
         
         http_response_code(200);
         echo json_encode($products);
@@ -99,6 +111,7 @@ try {
         $image = trim($input['image'] ?? '');
         $description = trim($input['description'] ?? '');
         $stock = intval($input['stock'] ?? 50);
+        $size = trim($input['size'] ?? '');
         
         // Validation
         if (empty($name) || empty($category) || $price <= 0) {
@@ -109,8 +122,8 @@ try {
         
         // Insert product
         // Rating is review-driven; start at 0 until customer reviews are submitted.
-        $stmt = $pdo->prepare("INSERT INTO products (name, category, price, rating, tag, image, description, stock, is_available) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)");
-        $stmt->execute([$name, $category, $price, 0, $tag, $image, $description, $stock]);
+        $stmt = $pdo->prepare("INSERT INTO products (name, category, price, rating, tag, image, description, stock, size, is_available) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+        $stmt->execute([$name, $category, $price, 0, $tag, $image, $description, $stock, $size]);
         
         $productId = $pdo->lastInsertId();
         $emailsSent = 0;
@@ -189,6 +202,7 @@ try {
         $image = trim($input['image'] ?? '');
         $description = trim($input['description'] ?? '');
         $stock = intval($input['stock'] ?? 50);
+        $size = trim($input['size'] ?? '');
         
         // Validation
         if (empty($name) || empty($category) || $price <= 0) {
@@ -198,8 +212,8 @@ try {
         }
         
         // Update product
-        $stmt = $pdo->prepare("UPDATE products SET name = ?, category = ?, price = ?, tag = ?, image = ?, description = ?, stock = ? WHERE id = ?");
-        $stmt->execute([$name, $category, $price, $tag, $image, $description, $stock, $productId]);
+        $stmt = $pdo->prepare("UPDATE products SET name = ?, category = ?, price = ?, tag = ?, image = ?, description = ?, stock = ?, size = ? WHERE id = ?");
+        $stmt->execute([$name, $category, $price, $tag, $image, $description, $stock, $size, $productId]);
         
         http_response_code(200);
         echo json_encode([

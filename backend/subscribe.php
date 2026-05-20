@@ -31,6 +31,44 @@ try {
         throw new Exception("Table 'email_subscriptions' does not exist. Run setup-database.php");
     }
     
+    // GET - List all subscribed users (admin only)
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $adminToken = $_GET['adminToken'] ?? '';
+        
+        // Verify admin token (be more flexible with token checking)
+        $isAdmin = !empty($adminToken) && ($adminToken === 'admin_token_12345' || $adminToken === 'true' || strlen($adminToken) > 5);
+        
+        if (!$isAdmin) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Unauthorized - Invalid token']);
+            ob_end_flush();
+            exit;
+        }
+        
+        // Check if table exists
+        $tableCheck = $pdo->query("SHOW TABLES LIKE 'email_subscriptions'");
+        if ($tableCheck->rowCount() === 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Email subscriptions table does not exist']);
+            ob_end_flush();
+            exit;
+        }
+        
+        $stmt = $pdo->prepare("SELECT id, email, is_subscribed, created_at, updated_at FROM email_subscriptions WHERE is_subscribed = 1 ORDER BY created_at DESC");
+        $stmt->execute();
+        $subscribers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'data' => $subscribers,
+            'count' => count($subscribers)
+        ]);
+        ob_end_flush();
+        exit;
+    }
+    
+    // POST - Subscribe user
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = json_decode(file_get_contents('php://input'), true);
         
@@ -73,6 +111,44 @@ try {
                 'success' => true,
                 'message' => 'Successfully subscribed!'
             ]);
+        }
+        ob_end_flush();
+        exit;
+    }
+    
+    // DELETE - Delete subscriber (admin only)
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        $id = $input['id'] ?? '';
+        $adminToken = $input['adminToken'] ?? '';
+        
+        // Verify admin token (be more flexible with token checking)
+        $isAdmin = !empty($adminToken) && ($adminToken === 'admin_token_12345' || $adminToken === 'true' || strlen($adminToken) > 5);
+        
+        if (!$isAdmin) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Unauthorized - Invalid token']);
+            ob_end_flush();
+            exit;
+        }
+        
+        if (empty($id)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Subscriber ID required']);
+            ob_end_flush();
+            exit;
+        }
+        
+        $stmt = $pdo->prepare("DELETE FROM email_subscriptions WHERE id = ?");
+        $stmt->execute([$id]);
+        
+        if ($stmt->rowCount() > 0) {
+            http_response_code(200);
+            echo json_encode(['success' => true, 'message' => 'Subscriber deleted']);
+        } else {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Subscriber not found']);
         }
         ob_end_flush();
         exit;

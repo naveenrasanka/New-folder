@@ -5,11 +5,13 @@ USE shop_db;
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(40) DEFAULT NULL,
     address VARCHAR(200) DEFAULT NULL,
+    district VARCHAR(80) DEFAULT NULL,
+    postalcode VARCHAR(20) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -23,6 +25,7 @@ CREATE TABLE products (
     image VARCHAR(255),
     stock INT DEFAULT 50,
     category VARCHAR(50) NOT NULL,
+    size VARCHAR(50),
     rating DECIMAL(3, 1) DEFAULT 4.5,
     tag VARCHAR(50),
     is_available BOOLEAN DEFAULT 1,
@@ -45,7 +48,8 @@ CREATE TABLE IF NOT EXISTS orders (
     status VARCHAR(20) DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_email) REFERENCES users(email) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 -- Order items table
@@ -80,7 +84,8 @@ CREATE TABLE IF NOT EXISTS product_reviews (
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_email) REFERENCES users(email) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 -- Site reviews table
@@ -92,7 +97,8 @@ CREATE TABLE IF NOT EXISTS site_reviews (
     rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_email) REFERENCES users(email) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 -- Advertisements table
@@ -118,29 +124,35 @@ CREATE TABLE IF NOT EXISTS email_subscriptions (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Sample products
-INSERT INTO products (name, category, price, rating, tag, image, description, stock) VALUES
-('Aurora Smart Speaker', 'tech', 129.99, 4.7, 'Bestseller', 'https://images.unsplash.com/photo-1512446816042-444d641267d4?auto=format&fit=crop&w=800&q=80', 'Premium wireless speaker with superior sound quality', 72),
-('Nimbus Air Purifier', 'home', 249.00, 4.9, 'Eco', 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80', 'Advanced air purification for cleaner air', 45),
-('Pulse Fitness Band', 'fitness', 89.50, 4.6, 'New', 'https://images.unsplash.com/photo-1518441902117-fc8b0c201d19?auto=format&fit=crop&w=800&q=80', 'Track your fitness with precision', 58),
-('Lumen Desk Lamp', 'home', 58.00, 4.4, 'Limited', 'https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=800&q=80', 'Energy-efficient LED desk lamp', 34),
-('Stride Eco Sneakers', 'fashion', 145.00, 4.5, 'Trending', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80', 'Sustainable and comfortable footwear', 62),
-('Vista Travel Backpack', 'fashion', 110.00, 4.3, 'Travel', 'https://images.unsplash.com/photo-1514474959185-1472d4e46f4e?auto=format&fit=crop&w=800&q=80', 'Perfect companion for your travels', 28),
-('Halo Aroma Diffuser', 'home', 64.99, 4.8, 'Relax', 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80', 'Create a peaceful atmosphere at home', 50),
-('Zen Smart Watch', 'tech', 219.00, 4.7, 'Editor pick', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80', 'Advanced health and fitness tracking', 41);
+-- Sample products for BUY LK Food Delivery
+INSERT INTO products (name, category, price, rating, tag, image, description, stock, size) VALUES
+('Margherita Pizza', 'pizza', 299.99, 4.7, 'Bestseller', 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80', 'Classic Margherita pizza with fresh basil and mozzarella', 50, 'medium'),
+('Pepperoni Pizza', 'pizza', 349.99, 4.8, 'Popular', 'https://images.unsplash.com/photo-1628840042765-356cda07f4ee?auto=format&fit=crop&w=800&q=80', 'Delicious pepperoni pizza with extra cheese', 45, 'medium'),
+('Vegetarian Kottu', 'kottu', 249.99, 4.5, 'Trending', 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?auto=format&fit=crop&w=800&q=80', 'Sri Lankan chopped paratha with vegetables', 60, NULL),
+('Chicken Kottu', 'kottu', 279.99, 4.6, 'Bestseller', 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?auto=format&fit=crop&w=800&q=80', 'Sri Lankan chopped paratha with tender chicken', 55, NULL),
+('Fried Rice', 'rice', 199.99, 4.4, 'Quick', 'https://images.unsplash.com/photo-1603894542802-f7ef2c9caa11?auto=format&fit=crop&w=800&q=80', 'Fluffy fried rice with egg and vegetables', 70, NULL),
+('Butter Chicken Rice', 'rice', 329.99, 4.7, 'Special', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc201?auto=format&fit=crop&w=800&q=80', 'Creamy butter chicken served with fragrant rice', 40, NULL),
+('Chocolate Cake', 'bakery', 149.99, 4.8, 'Sweet', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80', 'Rich and moist chocolate cake slice', 80, NULL),
+('Croissant', 'bakery', 99.99, 4.6, 'Fresh', 'https://images.unsplash.com/photo-1585080199000-c9fccfadae5d?auto=format&fit=crop&w=800&q=80', 'Buttery and flaky French croissant', 100, NULL),
+('Iced Tea', 'beverages', 79.99, 4.5, 'Refreshing', 'https://images.unsplash.com/photo-1556195332-924ec42dd029?auto=format&fit=crop&w=800&q=80', 'Cold and refreshing iced tea', 150, NULL),
+('Mango Smoothie', 'beverages', 119.99, 4.7, 'Popular', 'https://images.unsplash.com/photo-1638859289117-b8c0b6935d8b?auto=format&fit=crop&w=800&q=80', 'Fresh mango smoothie with yogurt', 120, NULL),
+('Samosa', 'others', 49.99, 4.5, 'Snack', 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80', 'Crispy triangular pastry with spiced filling', 200, NULL);
 
--- Sample reviews
+-- Sample reviews for food products
 INSERT INTO product_reviews (product_id, user_name, rating, comment) VALUES
-(1, 'John Doe', 5, 'Excellent sound quality! Best speaker I have ever owned.'),
-(1, 'Sarah Smith', 4, 'Great product but a bit pricey. Worth it though!'),
-(2, 'Mike Johnson', 5, 'This air purifier changed my life. Highly recommend!'),
-(3, 'Emily Brown', 4, 'Good fitness band, accurate tracking and long battery life.'),
-(5, 'David Wilson', 5, 'Most comfortable sneakers ever! Love the eco-friendly design.');
+(1, 'Amal Silva', 5, 'Best pizza in town! Fresh ingredients and perfect crust.'),
+(1, 'Priya Perera', 4, 'Great taste, delivery was quick!'),
+(2, 'Ravi Kumar', 5, 'Pepperoni pizza is absolutely delicious!'),
+(3, 'Nadeesha Fernando', 4, 'Authentic kottu, tastes homemade!'),
+(4, 'Imran Khan', 5, 'Chicken kottu with perfect spice level. Highly recommend!'),
+(5, 'Ayesha Hassan', 4, 'Fried rice was hot and fresh.'),
+(9, 'David Wilson', 5, 'Best mango smoothie ever! Very refreshing.');
 
 -- Sample site reviews
 INSERT INTO site_reviews (user_name, user_email, rating, comment) VALUES
-('Ayesha Perera', 'ayesha@example.com', 5, 'The site is easy to use and the delivery updates are clear and helpful.'),
-('Kasun Silva', 'kasun@example.com', 4, 'Great selection and the checkout flow was smooth.'),
-('Nadeesha Fernando', 'nadeesha@example.com', 5, 'Fast delivery and very responsive customer support.'),
-('Imran Khan', 'imran@example.com', 4, 'Overall a solid experience. I would definitely order again.');
+('Ayesha Perera', 'ayesha@example.com', 5, 'BUY LK has the best food delivery service! Fast and delicious.'),
+('Kasun Silva', 'kasun@example.com', 4, 'Great variety of food options and smooth checkout experience.'),
+('Nadeesha Fernando', 'nadeesha@example.com', 5, 'Amazing food quality and very responsive customer support!'),
+('Imran Khan', 'imran@example.com', 5, 'Best food delivery app in Sri Lanka. Highly recommend!'),
+('Ravi Kumar', 'ravi@example.com', 4, 'Good selection and reasonable prices. Keep up the good work!');
 

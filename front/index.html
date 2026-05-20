@@ -6,8 +6,7 @@
     <title>BUY LK — Food Delivery</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="wishlist.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
-  </head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">  </head>
   <body>
     <div class="app">
       <header class="topbar">
@@ -141,17 +140,17 @@
         <div class="deal-card">
           <h3>Fast delivery zones</h3>
           <p>See which areas qualify for quick drop-offs and low delivery fees.</p>
-          <button class="ghost-btn">Check area</button>
+          <button class="ghost-btn" id="checkAreaBtn">Check area</button>
         </div>
         <div class="deal-card highlight">
           <h3>Meal deals</h3>
           <p>Mix mains, sides, and drinks for better value on every order.</p>
-          <button class="primary-btn">View deals</button>
+          <button class="primary-btn" id="viewDealsBtn" onclick="window.location.href='shop.html'">View deals</button>
         </div>
         <div class="deal-card">
-          <h3>Fresh prep</h3>
-          <p>Made to order with clear ingredients and easy reorder options.</p>
-          <button class="ghost-btn">See kitchen menu</button>
+          <h3>My Account</h3>
+          <p>Manage your profile, track orders, and update your delivery preferences.</p>
+          <button class="ghost-btn" onclick="window.location.href='account.html'">View Account</button>
         </div>
       </section>
 
@@ -369,17 +368,41 @@
           <form class="payment-form" id="paymentForm">
             <div class="form-section">
               <h3>Billing Information</h3>
+              <input type="text" placeholder="Full Name" data-billing-field="name" required />
+              <input type="email" placeholder="Email Address" data-billing-field="email" required />
+              <input type="text" placeholder="Street Address" data-billing-field="streetAddress" required />
               <div class="form-row">
-                <input type="text" placeholder="First Name" required />
-                <input type="text" placeholder="Last Name" required />
+                <select data-billing-field="district" required>
+                  <option value="" disabled selected>Select District</option>
+                  <option value="Ampara">Ampara</option>
+                  <option value="Anuradhapura">Anuradhapura</option>
+                  <option value="Badulla">Badulla</option>
+                  <option value="Batticaloa">Batticaloa</option>
+                  <option value="Colombo">Colombo</option>
+                  <option value="Galle">Galle</option>
+                  <option value="Gampaha">Gampaha</option>
+                  <option value="Hambantota">Hambantota</option>
+                  <option value="Jaffna">Jaffna</option>
+                  <option value="Kalutara">Kalutara</option>
+                  <option value="Kandy">Kandy</option>
+                  <option value="Kegalle">Kegalle</option>
+                  <option value="Kilinochchi">Kilinochchi</option>
+                  <option value="Kurunegala">Kurunegala</option>
+                  <option value="Mannar">Mannar</option>
+                  <option value="Matale">Matale</option>
+                  <option value="Matara">Matara</option>
+                  <option value="Monaragala">Monaragala</option>
+                  <option value="Mullaitivu">Mullaitivu</option>
+                  <option value="Nuwara Eliya">Nuwara Eliya</option>
+                  <option value="Polonnaruwa">Polonnaruwa</option>
+                  <option value="Puttalam">Puttalam</option>
+                  <option value="Ratnapura">Ratnapura</option>
+                  <option value="Trincomalee">Trincomalee</option>
+                  <option value="Vavuniya">Vavuniya</option>
+                </select>
+                <input type="text" placeholder="Postal Code" data-billing-field="postalCode" required />
               </div>
-              <input type="email" placeholder="Email Address" required />
-              <input type="text" placeholder="Street Address" required />
-              <div class="form-row">
-                <input type="text" placeholder="City" required />
-                <input type="text" placeholder="Postal Code" required />
-              </div>
-              <input type="tel" placeholder="Phone Number" required />
+              <input type="tel" placeholder="Phone Number" data-billing-field="phone" required />
             </div>
 
             <div class="form-section">
@@ -510,11 +533,27 @@
       </div>
     </div>
 
+    <!-- Delivery zones map modal -->
+    <div class="map-modal" id="mapModal">
+      <div class="map-modal-content">
+        <div class="map-modal-header">
+          <h2>Our Delivery Zones</h2>
+          <button class="icon-btn" id="closeMapModal" aria-label="Close map"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="map-container" id="map"></div>
+        <div class="map-legend">
+          <p><span style="color: var(--primary);">📍</span> Branches | <span style="color: var(--secondary);">📌</span> Delivery areas | Click markers for details</p>
+        </div>
+      </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script src="https://js.puter.com/v2/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
     <script src="api.js?v=20260425"></script>
     <script src="script.js?v=20260425"></script>
     <script src="product-modal.js?v=20260425"></script>
+    <script src="map-branches.js?v=20260425"></script>
   </body>
 </html>

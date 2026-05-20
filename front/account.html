@@ -7,6 +7,51 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="wishlist.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+      /* Profile details input styling */
+      .account-card .account-form input,
+      .account-card .account-form textarea,
+      .account-card .account-form select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--text);
+        transition: border-color .15s ease, box-shadow .15s ease;
+        box-sizing: border-box;
+      }
+
+      .account-card .account-form textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      .account-card .account-form input:focus,
+      .account-card .account-form textarea:focus,
+      .account-card .account-form select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 8px 24px rgba(59,130,246,0.08);
+      }
+
+      .account-card .hint {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-top: 6px;
+        display: block;
+      }
+
+      .account-card .form-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      @media (max-width: 480px) {
+        .account-card .form-actions { flex-direction: column; }
+      }
+    </style>
   </head>
   <body data-page="account">
     <div class="app">
@@ -89,7 +134,7 @@
               <div class="form-group">
                 <label for="profileEmail">Email</label>
                 <input type="email" id="profileEmail" placeholder="you@example.com" disabled />
-                <small class="hint">Email changes must be done in the login system.</small>
+                <small class="hint">you should contact admin to change your email.</small>
               </div>
               <div class="form-group">
                 <label for="profilePhone">Phone</label>
@@ -97,7 +142,42 @@
               </div>
               <div class="form-group">
                 <label for="profileAddress">Delivery address</label>
-                <input type="text" id="profileAddress" placeholder="Street, city" />
+                <textarea id="profileAddress" placeholder="Street, city"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="profileDistrict">District</label>
+                <select id="profileDistrict">
+                  <option value="">Select district</option>
+                  <option value="Ampara">Ampara</option>
+                  <option value="Anuradhapura">Anuradhapura</option>
+                  <option value="Badulla">Badulla</option>
+                  <option value="Batticaloa">Batticaloa</option>
+                  <option value="Colombo">Colombo</option>
+                  <option value="Galle">Galle</option>
+                  <option value="Gampaha">Gampaha</option>
+                  <option value="Hambantota">Hambantota</option>
+                  <option value="Jaffna">Jaffna</option>
+                  <option value="Kalutara">Kalutara</option>
+                  <option value="Kandy">Kandy</option>
+                  <option value="Kegalle">Kegalle</option>
+                  <option value="Kilinochchi">Kilinochchi</option>
+                  <option value="Kurunegala">Kurunegala</option>
+                  <option value="Mannar">Mannar</option>
+                  <option value="Matale">Matale</option>
+                  <option value="Matara">Matara</option>
+                  <option value="Monaragala">Monaragala</option>
+                  <option value="Mullaitivu">Mullaitivu</option>
+                  <option value="Nuwara Eliya">Nuwara Eliya</option>
+                  <option value="Polonnaruwa">Polonnaruwa</option>
+                  <option value="Puttalam">Puttalam</option>
+                  <option value="Ratnapura">Ratnapura</option>
+                  <option value="Trincomalee">Trincomalee</option>
+                  <option value="Vavuniya">Vavuniya</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="profilePostalCode">Postal code</label>
+                <input type="text" id="profilePostalCode" placeholder="10000" />
               </div>
             </div>
             <div class="form-actions">
@@ -199,6 +279,101 @@
       </div>
     </aside>
 
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+      <div class="payment-container">
+        <button class="payment-close" id="closePayment">✕</button>
+        <div class="payment-content">
+          <h2>Payment</h2>
+          <div class="payment-summary">
+            <div class="payment-row">
+              <span>Subtotal</span>
+              <span id="paymentSubtotal">USD 0.00</span>
+            </div>
+            <div class="payment-row">
+              <span>Shipping</span>
+              <span id="paymentShipping">USD 0.00</span>
+            </div>
+            <div class="payment-row total">
+              <span>Total Amount</span>
+              <span id="paymentTotal">USD 0.00</span>
+            </div>
+          </div>
+
+          <form class="payment-form" id="paymentForm">
+            <div class="form-section">
+              <h3>Billing Information</h3>
+              <input type="text" placeholder="Full Name" data-billing-field="name" required />
+              <input type="email" placeholder="Email Address" data-billing-field="email" required />
+              <input type="text" placeholder="Street Address" data-billing-field="streetAddress" required />
+              <div class="form-row">
+                <select data-billing-field="district" required>
+                  <option value="" disabled selected>Select District</option>
+                  <option value="Ampara">Ampara</option>
+                  <option value="Anuradhapura">Anuradhapura</option>
+                  <option value="Badulla">Badulla</option>
+                  <option value="Batticaloa">Batticaloa</option>
+                  <option value="Colombo">Colombo</option>
+                  <option value="Galle">Galle</option>
+                  <option value="Gampaha">Gampaha</option>
+                  <option value="Hambantota">Hambantota</option>
+                  <option value="Jaffna">Jaffna</option>
+                  <option value="Kalutara">Kalutara</option>
+                  <option value="Kandy">Kandy</option>
+                  <option value="Kegalle">Kegalle</option>
+                  <option value="Kilinochchi">Kilinochchi</option>
+                  <option value="Kurunegala">Kurunegala</option>
+                  <option value="Mannar">Mannar</option>
+                  <option value="Matale">Matale</option>
+                  <option value="Matara">Matara</option>
+                  <option value="Monaragala">Monaragala</option>
+                  <option value="Mullaitivu">Mullaitivu</option>
+                  <option value="Nuwara Eliya">Nuwara Eliya</option>
+                  <option value="Polonnaruwa">Polonnaruwa</option>
+                  <option value="Puttalam">Puttalam</option>
+                  <option value="Ratnapura">Ratnapura</option>
+                  <option value="Trincomalee">Trincomalee</option>
+                  <option value="Vavuniya">Vavuniya</option>
+                </select>
+                <input type="text" placeholder="Postal Code" data-billing-field="postalCode" required />
+              </div>
+              <input type="tel" placeholder="Phone Number" data-billing-field="phone" required />
+            </div>
+
+            <div class="form-section">
+              <h3>Payment Method</h3>
+              <div class="payment-methods">
+                <label class="payment-method">
+                  <input type="radio" name="paymentMethod" value="credit_card" checked />
+                  <span>
+                    <strong>Credit Card</strong>
+                    <small>Pay online and continue to Stripe checkout.</small>
+                  </span>
+                </label>
+                <label class="payment-method">
+                  <input type="radio" name="paymentMethod" value="cash_on_delivery" />
+                  <span>
+                    <strong>Cash on Delivery</strong>
+                    <small>Complete the order now and pay when it arrives.</small>
+                  </span>
+                </label>
+              </div>
+              <p style="color: var(--muted); margin: 0; line-height: 1.6;">
+                Choose credit card to continue to Stripe, or cash on delivery to place the order immediately.
+              </p>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" required />
+              <span>I agree to the terms and conditions</span>
+            </label>
+
+            <button type="submit" class="primary-btn payment-btn">Complete Payment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Wishlist Modal -->
     <div class="wishlist-modal" id="wishlistModal">
       <div class="wishlist-container">
@@ -213,8 +388,8 @@
     <div class="toast" id="toast"></div>
 
     <script src="https://js.puter.com/v2/"></script>
-    <script src="api.js?v=20260425"></script>
-    <script src="script.js?v=20260425"></script>
-    <script src="account.js?v=20260425"></script>
+    <script src="api.js?v=20260519"></script>
+    <script src="script.js?v=20260519"></script>
+    <script src="account.js?v=20260519"></script>
   </body>
 </html>

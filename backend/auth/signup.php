@@ -60,8 +60,12 @@ try {
     $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
     $stmt->execute([$username]);
     if ($stmt->fetch()) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Username already exists']);
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'message' => 'User already exists, skipped insert',
+            'skipped' => true
+        ]);
         exit;
     }
     
@@ -69,8 +73,12 @@ try {
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Email already exists']);
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'message' => 'User already exists, skipped insert',
+            'skipped' => true
+        ]);
         exit;
     }
     

@@ -23,6 +23,33 @@ async function openProductModal(productId) {
   document.getElementById("productModalPrice").textContent = currency.format(product.price);
   document.getElementById("productModalDescription").textContent = product.description || "Premium quality product for your everyday needs.";
   
+  // Display size if applicable (pizza, rice, kottu)
+  const productModalInfo = document.querySelector(".product-modal-info");
+  const existingSizeDisplay = productModalInfo?.querySelector(".size-modal");
+  if (existingSizeDisplay) existingSizeDisplay.remove();
+  
+  if ((product.category === 'pizza' || product.category === 'rice' || product.category === 'kottu') && product.size) {
+    const sizeDisplay = document.createElement("div");
+    sizeDisplay.className = "size-modal";
+    sizeDisplay.style.cssText = "font-size: 1rem; margin: 8px 0; padding: 8px 12px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; color: #6366f1; font-weight: 600; text-transform: capitalize; display: inline-block;";
+    
+    let emoji = '🍕';
+    let label = 'Size';
+    if (product.category === 'rice') {
+      emoji = '🍚';
+      label = 'Portion Size';
+    } else if (product.category === 'kottu') {
+      emoji = '🥘';
+      label = 'Portion Size';
+    }
+    
+    sizeDisplay.textContent = `${emoji} ${label}: ${product.size}`;
+    const priceElement = document.getElementById("productModalPrice");
+    if (priceElement) {
+      priceElement.parentElement.insertBefore(sizeDisplay, priceElement.nextSibling);
+    }
+  }
+  
   // Set rating stars
   const stars = generateStars(product.rating);
   document.getElementById("productModalStars").innerHTML = stars;

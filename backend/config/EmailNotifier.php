@@ -5,9 +5,9 @@
  */
 
 class EmailNotifier {
-    private $fromEmail = 'kingpython1431@gmail.com';
+    private $fromEmail = 'stellarthinker75@gmail.com';
     private $fromName = 'E-Commerce Shop - New Product Alert';
-    private $sendgridApiKey = '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';
+    private $sendgridApiKey = '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';
     private $smtpConfig = null;
     
     public function __construct() {
@@ -52,9 +52,31 @@ class EmailNotifier {
             'errors' => []
         ];
         
+        // Ensure logs directory exists
+        $logsDir = __DIR__ . '/../logs';
+        if (!is_dir($logsDir)) {
+            @mkdir($logsDir, 0755, true);
+        }
+        $logFile = $logsDir . '/email_notifications.json';
+        $logs = [];
+        if (file_exists($logFile)) {
+            $logs = json_decode(file_get_contents($logFile), true) ?: [];
+        }
+        
         foreach ($emails as $email) {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                if ($this->sendNewProductNotification($email, $product)) {
+                $sent = $this->sendNewProductNotification($email, $product);
+                
+                // Log the notification attempt
+                $logs[] = [
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'email' => $email,
+                    'product_name' => $product['name'],
+                    'product_id' => $product['id'],
+                    'status' => $sent ? 'sent' : 'attempted'
+                ];
+                
+                if ($sent) {
                     $results['success']++;
                 } else {
                     $results['failed']++;
@@ -66,7 +88,151 @@ class EmailNotifier {
             }
         }
         
+        // Save logs
+        @file_put_contents($logFile, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        
         return $results;
+    }
+
+    /**
+     * Send an order status update email to a customer
+     * @param string $toEmail
+     * @param int $orderId
+     * @param string $status
+     * @param string $customerName
+     * @return bool
+     */
+    public function sendOrderStatusEmail($toEmail, $orderId, $status, $customerName = 'Customer', $items = [], $orderTotal = 0.0, $shippingCost = 0.0) {
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        $subject = "Order #{$orderId} status updated — {$status} - BUY LK";
+
+                $orderUrl = 'http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . '/E%20commerce/New-folder/front/account.html';
+
+                // Prefer embedding the local logo as base64 so email clients display it reliably.
+                $localLogoPath = __DIR__ . '/../../front/assests/logo.png';
+                $logoSrc = '';
+                if (file_exists($localLogoPath) && is_readable($localLogoPath)) {
+                    $logoData = base64_encode(file_get_contents($localLogoPath));
+                    $finfoType = function_exists('mime_content_type') ? mime_content_type($localLogoPath) : 'image/png';
+                    $logoSrc = 'data:' . ($finfoType ?: 'image/png') . ';base64,' . $logoData;
+                } else {
+                    // Fallback to absolute URL
+                    $logoSrc = 'http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . '/E%20commerce/New-folder/front/assests/logo.png';
+                }
+
+                $escapedName = htmlspecialchars($customerName);
+                $escapedStatus = htmlspecialchars($status);
+                $escapedOrderId = intval($orderId);
+
+                // Build items HTML
+                $itemsHtml = '';
+                $computedSubtotal = 0.0;
+                if (is_array($items) && count($items) > 0) {
+                    $itemsHtml .= "<table style=\"width:100%; border-collapse:collapse; margin-top:12px;\">";
+                    $itemsHtml .= "<thead><tr style=\"text-align:left; border-bottom:1px solid #eee;\"><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>";
+                    foreach ($items as $it) {
+                        $pname = htmlspecialchars($it['product_name'] ?? 'Product');
+                        $psize = isset($it['product_size']) && $it['product_size'] ? ' (' . htmlspecialchars($it['product_size']) . ')' : '';
+                        $qty = intval($it['quantity'] ?? 0);
+                        $unit = number_format(floatval($it['price'] ?? 0), 2);
+                        $lineTotal = $qty * floatval($it['price'] ?? 0);
+                        $computedSubtotal += $lineTotal;
+                        $itemsHtml .= "<tr style=\"border-bottom:1px solid #f4f4f4;\">";
+                        $itemsHtml .= "<td style=\"padding:8px 0;\">{$pname}{$psize}</td>";
+                        $itemsHtml .= "<td style=\"padding:8px 0;\">{$qty}</td>";
+                        $itemsHtml .= "<td style=\"padding:8px 0;\">LKR {$unit}</td>";
+                        $itemsHtml .= "<td style=\"padding:8px 0;\">LKR " . number_format($lineTotal, 2) . "</td>";
+                        $itemsHtml .= "</tr>";
+                    }
+                    $itemsHtml .= "</tbody></table>";
+                } else {
+                    $itemsHtml = '<p style="color:#666;">No item details available.</p>';
+                }
+
+                $displaySubtotal = number_format($computedSubtotal, 2);
+                $displayShipping = number_format(floatval($shippingCost), 2);
+
+                // If orderTotal from DB is zero or missing, derive it from computed subtotal + shipping
+                $effectiveOrderTotal = floatval($orderTotal);
+                if ($effectiveOrderTotal <= 0) {
+                    $effectiveOrderTotal = $computedSubtotal + floatval($shippingCost);
+                }
+                $displayOrderTotal = number_format($effectiveOrderTotal, 2);
+
+                $htmlBody = <<<HTML
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order #{$escapedOrderId} — Status updated</title>
+        <style>
+            body { margin:0; padding:0; background:#f4f6f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+            .email-wrap { width:100%; padding:20px 0; }
+            .email-body { max-width:680px; margin:0 auto; background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.08); }
+            .email-header { background:linear-gradient(90deg,#FF8C00,#ffb347); padding:18px 24px; display:flex; align-items:center; }
+            .brand { display:flex; align-items:center; gap:12px; }
+            .brand img { width:48px; height:48px; object-fit:contain; border-radius:6px; }
+            .brand h1 { font-size:18px; color:#fff; margin:0; letter-spacing:0.4px; }
+            .email-content { padding:22px 24px; color:#333; }
+            .greeting { font-size:16px; margin:0 0 12px 0; }
+            .status-badge { display:inline-block; padding:8px 12px; border-radius:20px; background:#e7f6ff; color:#0066cc; font-weight:600; margin:12px 0; }
+            .order-card { border:1px solid #f0f0f0; padding:14px; border-radius:6px; background:#fafafa; margin:12px 0; }
+            .order-meta { font-size:14px; color:#555; margin:8px 0; }
+            .cta { display:inline-block; margin-top:14px; background:#FF8C00; color:#fff; text-decoration:none; padding:12px 18px; border-radius:6px; font-weight:600; }
+            .footer { padding:16px 24px; font-size:12px; color:#888; background:#fbfbfb; text-align:center; }
+            @media (max-width:480px) {
+                .email-body { margin:0 12px; }
+                .brand h1 { font-size:16px; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="email-wrap">
+            <div class="email-body">
+                <div class="email-header">
+                    <div class="brand">
+                        <img src="{$logoSrc}" alt="BUY LK logo" />
+                        <h1>BUY LK — Order Update</h1>
+                    </div>
+                </div>
+                <div class="email-content">
+                    <p class="greeting">Hi {$escapedName},</p>
+                    <p>Your order <strong>#{$escapedOrderId}</strong> status has been updated.</p>
+                    <div class="status-badge">{$escapedStatus}</div>
+
+                    <div class="order-card">
+                        <div class="order-meta"><strong>Order ID:</strong> #{$escapedOrderId}</div>
+                        <div class="order-meta"><strong>Status:</strong> {$escapedStatus}</div>
+                        <div class="order-meta"><strong>Customer:</strong> {$escapedName}</div>
+
+                        {$itemsHtml}
+
+                        <div style="margin-top:12px; text-align:right; font-weight:600;">
+                            <div>Subtotal: LKR {$displaySubtotal}</div>
+                            <div>Shipping: LKR {$displayShipping}</div>
+                            <div style="margin-top:8px; font-size:1.05rem;">Order Total: LKR {$displayOrderTotal}</div>
+                        </div>
+
+                        <p style="margin-top:8px;">You can view the full details and tracking information in your account.</p>
+                        <a class="cta" href="{$orderUrl}">View your order</a>
+                    </div>
+
+                    <p style="color:#666; font-size:13px; margin-top:12px;">If you have any questions, reply to this email or visit our <a href="{$orderUrl}">support page</a>.</p>
+                </div>
+                <div class="footer">© 2026 BUY LK. All rights reserved.</div>
+            </div>
+        </div>
+    </body>
+</html>
+HTML;
+
+        $plainText = "Hi {$customerName},\n\nYour order #{$orderId} status has been updated to {$status}.\n\nView your orders: {$orderUrl}\n\nThanks,\nBUY LK";
+
+        return $this->sendEmail($toEmail, $subject, $htmlBody, $plainText);
     }
     
     /**
@@ -279,29 +445,45 @@ TEXT;
     }
     
     /**
-     * Send email using Sendgrid API (primary), Gmail SMTP (secondary), or PHP mail (fallback)
+     * Send email using Sendgrid API (primary), PHP mail (secondary fallback)
+     * Gmail SMTP is NOT reliable on local environments
      */
     private function sendEmail($toEmail, $subject, $htmlBody, $plainTextBody) {
         try {
-            // Try Sendgrid API first (primary method)
+            // Primary: Try Sendgrid API
             if (!empty($this->sendgridApiKey)) {
+                error_log("Attempting to send email via Sendgrid to: $toEmail");
                 $result = $this->sendViaSendgrid($toEmail, $subject, $htmlBody);
                 if ($result) {
+                    error_log("✅ Sendgrid email sent successfully to: $toEmail");
                     return true;
                 }
-                // If Sendgrid fails, fall through to try other methods
+                error_log("⚠️ Sendgrid failed for $toEmail, trying PHP mail fallback");
             }
             
-            // Try Gmail SMTP (secondary method)
+            // Fallback 1: Use PHP mail() - most reliable on local XAMPP
+            error_log("Attempting to send email via PHP mail() to: $toEmail");
+            $result = $this->sendViaPhpMail($toEmail, $subject, $htmlBody, $plainTextBody);
+            if ($result) {
+                error_log("✅ PHP mail() sent successfully to: $toEmail");
+                return $result;
+            }
+            
+            // Fallback 2: Try Gmail SMTP as last resort
+            error_log("Attempting to send email via Gmail SMTP to: $toEmail");
             if (!empty($this->smtpConfig['username']) && !empty($this->smtpConfig['password'])) {
-                return $this->sendViaGmailSMTP($toEmail, $subject, $htmlBody);
+                $result = $this->sendViaGmailSMTP($toEmail, $subject, $htmlBody);
+                if ($result) {
+                    error_log("✅ Gmail SMTP sent successfully to: $toEmail");
+                    return true;
+                }
             }
             
-            // Fallback to PHP mail()
-            return $this->sendViaPhpMail($toEmail, $subject, $htmlBody, $plainTextBody);
+            error_log("❌ All email methods failed for: $toEmail");
+            return false;
         } catch (Exception $e) {
             // Log the error but don't throw - email failures shouldn't block product creation
-            error_log("Email send error for $toEmail: " . $e->getMessage());
+            error_log("❌ Email send error for $toEmail: " . $e->getMessage());
             return false;
         }
     }
